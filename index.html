@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise 🎉</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            min-height: 100vh;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Welcome Page */
+        .welcome-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 90vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .welcome-page h1 {
+            font-size: 2.5rem;
+            color: #ff4081;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 0 #fff;
+        }
+
+        .input-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ff4081;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ff9a9e;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: #ff4081;
+        }
+
+        button {
+            background: linear-gradient(45deg, #ff4081, #ff6b6b);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Birthday Banner */
+        .birthday-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: confettiRain 5s infinite;
+        }
+
+        @keyframes confettiRain {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        .banner-content {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 90%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .banner-content h1 {
+            font-size: 3rem;
+            color: #ff4081;
+            margin-bottom: 20px;
+        }
+
+        .birthday-info {
+            font-size: 1.5rem;
+            color: #667eea;
+            margin-bottom: 30px;
+        }
+
+        .close-banner {
+            background: #ff4081;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            display: none;
+            padding: 20px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            color: white;
+            font-size: 1.8rem;
+            margin: 30px 0 20px 0;
+            text-shadow: 2px 2px 0 #ff4081;
+            padding-bottom: 10px;
+            border-bottom: 3px solid white;
+        }
+
+        /* Vertical Layout */
+        .vertical-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        /* Gift Wrapper */
+        .gift-wrapper {
+            position: relative;
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+            overflow: hidden;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gift-wrapper:hover {
+            transform: translateY(-5px);
+        }
+
+        .gift-cover {
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .gift-cover h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .gift-icon-large {
+            font-size: 4rem;
+            color: #ff4081;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .gift-instruction {
+            color: #666;
+            font-style: italic;
+            margin-top: 15px;
+        }
+
+        /* Gift Content (Hidden by default) */
+        .gift-content {
+            display: none;
+            width: 100%;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Photo Gallery */
+        .photo-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .photo-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
+        }
+
+        .photo-caption {
+            padding: 15px;
+            text-align: center;
+            font-style: italic;
+            color: #666;
+        }
+
+        /* Video Styling */
+        video {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Special Letter */
+        .special-letter {
+            background: linear-gradient(45deg, #fff9c4, #fffde7);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-left: 5px solid #ff9800;
+            margin-top: 10px;
+        }
+
+        .letter-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .letter-header h3 {
+            color: #ff6b00;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .letter-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: #444;
+            padding: 15px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 10px;
+        }
+
+        .letter-signature {
+            text-align: right;
+            margin-top: 25px;
+            font-style: italic;
+            color: #ff6b00;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Message Card */
+        .message-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            position: relative;
+            border-left: 5px solid #667eea;
+        }
+
+        .message-sender {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .message-text {
+            line-height: 1.6;
+            color: #555;
+        }
+
+        /* Close Button for Revealed Content */
+        .close-gift {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .welcome-page h1 {
+                font-size: 2rem;
+            }
+            
+            .banner-content h1 {
+                font-size: 2rem;
+            }
+            
+            .birthday-info {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .letter-content {
+                font-size: 1rem;
+            }
+            
+            .gift-icon-large {
+                font-size: 3rem;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Welcome Page -->
+        <div id="welcomePage" class="welcome-page">
+            <h1>🎂 Birthday Surprise 🎉</h1>
+            <div class="input-card">
+                <div class="input-group">
+                    <label for="userName"><i class="fas fa-user"></i> Your Name:</label>
+                    <input type="text" id="userName" placeholder="Enter your name">
+                </div>
+                <div class="input-group">
+                    <label for="birthDate"><i class="fas fa-calendar"></i> Birth Date:</label>
+                    <input type="date" id="birthDate">
+                </div>
+                <button onclick="showBirthdayBanner()">
+                    <i class="fas fa-gift"></i> Open Surprise!
+                </button>
+            </div>
+        </div>
+
+        <!-- Birthday Banner -->
+        <div id="birthdayBanner" class="birthday-banner">
+            <div class="banner-content">
+                <h1>🎉 HAPPY BIRTHDAY DADU! 🎂</h1>
+                <div class="birthday-info">
+                    <p id="bannerName"></p>
+                    <p id="bannerDate"></p>
+                </div>
+                <button class="close-banner" onclick="closeBanner()">
+                    <i class="fas fa-arrow-down"></i> Unwrap Your Gifts!
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div id="mainContent" class="main-content">
+            <!-- Video Messages Section -->
+            <h2 class="section-title">🎁 Click to Unwrap Your Gifts!</h2>
+            <div class="vertical-layout">
+                <!-- Video 1 Gift -->
+                <div class="gift-wrapper" onclick="revealGift('gift1')" id="wrapper1">
+                    <div class="gift-cover" id="cover1">
+                        <div class="gift-icon-large">🎥</div>
+                        <h3>Video Greeting #1</h3>
+                        <p class="gift-instruction">Click to unwrap this gift!</p>
+                    </div>
+                    <div class="gift-content" id="gift1">
+                        <h3 style="text-align: center; color: #ff4081; margin-bottom: 15px;">🎬 Special Video Message</h3>
+                        <video controls poster="https://images.unsplash.com/photo-1536240478700-b869070f9279?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80">
+                            <source src="BDVideo.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <p style="text-align: center; color: #666; margin-top: 10px;">
+                            A special birthday message just for you!
+                        </p>
+                        <button class="close-gift" onclick="closeGift('gift1', 'cover1', 'wrapper1')">
+                            <i class="fas fa-gift"></i> Wrap It Back
+                        </button>
+                    </div>
+                </div>
+
+               
+
+                <!-- Photo Gallery Gift -->
+                <div class="gift-wrapper" onclick="revealGift('gift3')" id="wrapper3">
+                    <div class="gift-cover" id="cover3">
+                        <div class="gift-icon-large">📸</div>
+                        <h3>Cherished Memories</h3>
+                        <p class="gift-instruction">Click to see precious memories!</p>
+                    </div>
+                    <div class="gift-content" id="gift3">
+                        <h3 style="text-align: center; color: #ff4081; margin-bottom: 15px;">📸 Your Special Memories</h3>
+                        <div class="photo-grid">
+                            <!-- Photo 1 -->
+                            <div class="photo-item">
+                                <img src="img3.jpeg" 
+                                     alt="Happy Memory">
+                                <div class="photo-caption">
+                                    "Handsome Birthday Boy!"
+                                </div>
+                            </div>
+
+                            <!-- Photo 2 -->
+                            <div class="photo-item">
+                                <img src="img2.jpeg" 
+                                     alt="Birthday Celebration">
+                                <div class="photo-caption">
+                                    "Stay Happy, Stay Blessed!"
+                                </div>
+                            </div>
+
+                            <!-- Photo 3 -->
+                            <div class="photo-item">
+                                <img src="img4.jpeg" 
+                                     alt="Special Day">
+                                <div class="photo-caption">
+                                    "Some Old Memories!"
+                                </div>
+                            </div>
+                        </div>
+                        <button class="close-gift" onclick="closeGift('gift3', 'cover3', 'wrapper3')">
+                            <i class="fas fa-gift"></i> Wrap It Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Special Letter Section (Always visible) -->
+            <h2 class="section-title">💌 A Special Letter For You</h2>
+            <div class="vertical-layout">
+                <div class="special-letter">
+                    <div class="letter-header">
+                        <h3><i class="fas fa-envelope"></i> To The Birthday Star</h3>
+                        <p style="color: #666;">A heartfelt message just for you</p>
+                    </div>
+                    
+                    <div class="letter-content">
+                        <p>MY Dearest Dadu,</p>
+                        
+                        <p style="margin-top: 15px;">
+                          First of all i want to wish you a very Happy Birthday!
+                          
+                        </p>
+                        
+                        <p style="margin-top: 15px;">
+                            On this special day, I want to remind you of how much you mean to me. 
+                            You are not just my brother but also my best friend. Just remember whnenever you need me i will always be there for you no matter what.
+                        </p>
+                        
+                        <p style="margin-top: 15px;">
+                            As you celebrate another year of life, I want you to know that you deserve all the happiness in the world. 
+                            May this year bring you closer to your dreams, fill your life with joy, and surround you with love.
+                        </p>
+                        
+                        <p style="margin-top: 15px;">
+                            Never forget how amazing you are. My smart yet a little annoying borther.
+                        </p>
+                    </div>
+                    
+                    <div class="letter-signature">
+                        <p>With all my love and blessings,</p>
+                        <p style="font-size: 1.4rem; color: #ff4081;">Your Sister</p>
+                        <p style="color: #888; font-size: 1rem;">❤️</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Final Message -->
+            <div class="message-card" style="margin-top: 30px; text-align: center;">
+                <div class="message-sender">🎂 One More Thing... 🎂</div>
+                <div class="message-text" style="font-size: 1.1rem;">
+                    Click on each gift box to unwrap your surprises! Each gift contains something special just for you.
+                    <br><br>
+                    <span style="color: #ff4081; font-weight: bold;">Happy Birthday Once Again! 🎉</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get user input and show birthday banner
+        function showBirthdayBanner() {
+            const userName = document.getElementById('userName').value;
+            const birthDate = document.getElementById('birthDate').value;
+            
+            if (!userName || !birthDate) {
+                alert("Please enter your name and birth date!");
+                return;
+            }
+            
+            // Format the date
+            const dateObj = new Date(birthDate);
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = dateObj.toLocaleDateString('en-US', options);
+            
+            // Update banner content
+            document.getElementById('bannerName').textContent = `Happy Birthday, ${userName}!`;
+            document.getElementById('bannerDate').textContent = `Born on: ${formattedDate}`;
+            
+            // Show banner
+            document.getElementById('welcomePage').style.display = 'none';
+            document.getElementById('birthdayBanner').style.display = 'flex';
+            
+            // Add confetti effect
+            createConfetti();
+        }
+        
+        // Close banner and show main content
+        function closeBanner() {
+            document.getElementById('birthdayBanner').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+            
+            // Scroll to top of main content
+            window.scrollTo(0, 0);
+        }
+        
+        // Reveal gift content
+        function revealGift(giftId) {
+            const gift = document.getElementById(giftId);
+            const coverId = 'cover' + giftId.slice(-1);
+            const wrapperId = 'wrapper' + giftId.slice(-1);
+            
+            const cover = document.getElementById(coverId);
+            const wrapper = document.getElementById(wrapperId);
+            
+            // Hide cover, show content
+            cover.style.display = 'none';
+            gift.style.display = 'block';
+            
+            // Expand wrapper
+            wrapper.style.minHeight = 'auto';
+            wrapper.style.padding = '30px';
+            
+            // Play unwrapping sound effect (optional)
+            playUnwrapSound();
+            
+            // Scroll gift into view
+            wrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        // Close gift and show cover again
+        function closeGift(giftId, coverId, wrapperId) {
+            const gift = document.getElementById(giftId);
+            const cover = document.getElementById(coverId);
+            const wrapper = document.getElementById(wrapperId);
+            
+            event.stopPropagation(); // Prevent triggering reveal again
+            
+            // Hide content, show cover
+            gift.style.display = 'none';
+            cover.style.display = 'flex';
+            cover.style.flexDirection = 'column';
+            cover.style.alignItems = 'center';
+            
+            // Reset wrapper height
+            wrapper.style.minHeight = '200px';
+            wrapper.style.padding = '25px';
+        }
+        
+        // Play unwrapping sound (optional)
+        function playUnwrapSound() {
+            // Create audio element for unwrapping sound
+            const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-unwrap-gift-paper-347.mp3');
+            audio.volume = 0.3;
+            audio.play().catch(e => console.log("Audio play failed:", e));
+        }
+        
+        // Confetti effect
+        function createConfetti() {
+            const colors = ['#ff4081', '#667eea', '#4CAF50', '#FF9800', '#9C27B0'];
+            const banner = document.getElementById('birthdayBanner');
+            
+            // Clear previous confetti
+            const existingConfetti = banner.querySelectorAll('.confetti');
+            existingConfetti.forEach(confetti => confetti.remove());
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.position = 'absolute';
+                confetti.style.width = Math.random() * 15 + 5 + 'px';
+                confetti.style.height = Math.random() * 15 + 5 + 'px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-20px';
+                confetti.style.opacity = '0.7';
+                
+                banner.appendChild(confetti);
+                
+                // Animation
+                confetti.animate([
+                    { transform: 'translateY(0) rotate(0deg)', opacity: 0.7 },
+                    { transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                ], {
+                    duration: Math.random() * 3000 + 2000,
+                    easing: 'cubic-bezier(0.215, 0.610, 0.355, 1)'
+                });
+                
+                // Remove after animation
+                setTimeout(() => confetti.remove(), 5000);
+            }
+        }
+        
+        // Set today's date as default for birthdate input
+        document.getElementById('birthDate').valueAsDate = new Date();
+        
+        // Prevent gift content from closing when clicking inside
+        document.querySelectorAll('.gift-content').forEach(content => {
+            content.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
+    </script>
+</body>
+</html>
